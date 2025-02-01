@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>San Valentín Especial</title>
+  <style>
+    /* Estilos básicos para la página */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #f0e6f6;
+      font-family: 'Arial', sans-serif;
+    }
+    #flowers {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Diseño de la rosa morada */
+    .flower {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background-color: #9b59b6; /* Color morado */
+      border-radius: 50%;
+      animation: flowerAnimation 5s infinite;
+    }
+
+    .flower:before, .flower:after {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      background-color: #9b59b6;
+      border-radius: 50%;
+      top: -25px;
+      left: -25px;
+      animation: flowerAnimation 5s infinite;
+    }
+
+    /* Animación para el movimiento de las flores en 3D */
+    @keyframes flowerAnimation {
+      0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(200px, 200px, 100px) rotate(360deg); }
+      100% { transform: translate3d(0, 0, 0) rotate(720deg); }
+    }
+
+    /* Estilos del corazón */
+    #heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: red;
+      opacity: 0;
+      z-index: 2;
+      text-align: center;
+      font-family: 'Verdana', sans-serif;
+      display: none;
+    }
+    #heartText {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+
+    /* Estilos para los botones */
+    #acceptButton, #declineButton {
+      position: absolute;
+      bottom: 20%;
+      width: 200px;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #9b59b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 3;
+    }
+    #acceptButton {
+      left: 25%;
+    }
+    #declineButton {
+      left: 55%;
+    }
+    #acceptButton:hover, #declineButton:hover {
+      background-color: #8e44ad;
+    }
+
+    /* Estilo para las estrellitas */
+    .star {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: yellow;
+      border-radius: 50%;
+      animation: starAnimation 2s infinite;
+    }
+
+    @keyframes starAnimation {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+
+    /* Estilo para el mensaje de "TE AMO MUCHO" */
+    #loveMessage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      color: #ff69b4;
+      opacity: 0;
+      z-index: 4;
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      display: none;
+      font-weight: bold;
+      animation: loveMessageAnimation 2s forwards;
+    }
+
+    @keyframes loveMessageAnimation {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Flores moradas -->
+  <div id="flowers"></div>
+
+  <!-- Corazón y texto -->
+  <div id="heart">
+    <span>&#10084;</span>
+    <div id="heartText">¿Puedo ser tu San Valentín?</div>
+  </div>
+
+  <!-- Botones de aceptación y rechazo -->
+  <button id="acceptButton" onclick="accept()">Sí, acepto</button>
+  <button id="declineButton" onclick="decline()">No</button>
+
+  <!-- Mensaje "TE AMO MUCHO" -->
+  <div id="loveMessage">TE AMO MUCHO</div>
+
+  <script>
+    // Crear flores moradas animadas
+    const flowerContainer = document.getElementById('flowers');
+    const numFlowers = 40; // Aumentamos el número de flores
+    for (let i = 0; i < numFlowers; i++) {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.style.left = `${Math.random() * window.innerWidth}px`;
+      flower.style.top = `${Math.random() * window.innerHeight}px`;
+      flower.style.animationDuration = `${Math.random() * 4 + 3}s`;
+      flowerContainer.appendChild(flower);
+    }
+
+    // Función para mostrar el corazón
+    function showHeart() {
+      const heart = document.getElementById('heart');
+      heart.style.display = 'block';
+      heart.style.opacity = 1;
+    }
+
+    // Función para aceptar la invitación
+    function accept() {
+      // Ocultar la pregunta y mostrar el mensaje "TE AMO MUCHO"
+      const heartText = document.getElementById('heartText');
+      heartText.style.display = 'none';
+      
+      // Ocultar los botones
+      document.getElementById('acceptButton').style.display = 'none';
+      document.getElementById('declineButton').style.display = 'none';
+
+      // Mostrar el corazón
+      showHeart();
+
+      // Crear estrellitas
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        // Posicionar las estrellas en lugares aleatorios
+        star.style.left = `${Math.random() * window.innerWidth}px`;
+        star.style.top = `${Math.random() * window.innerHeight}px`;
+        // Agregar animación de movimiento
+        star.style.setProperty('--x', `${Math.random() * 400 - 200}px`);
+        star.style.setProperty('--y', `${Math.random() * 400 - 200}px`);
+        document.body.appendChild(star);
+      }
+
+      // Mostrar el mensaje "TE AMO MUCHO"
+      const loveMessage = document.getElementById('loveMessage');
+      loveMessage.style.display = 'block';
+      loveMessage.style.opacity = 1;
+    }
+
+    // Función para rechazar la invitación
+    function decline() {
+      // Ocultar los botones y mostrar solo el "Sí, acepto"
+      document.getElementById('declineButton').style.display = 'none';
+    }
+
+    // Esperar 5 segundos y luego mostrar el corazón
+    setTimeout(showHeart, 5000);
+  </script>
+
+</body>
+</html>
